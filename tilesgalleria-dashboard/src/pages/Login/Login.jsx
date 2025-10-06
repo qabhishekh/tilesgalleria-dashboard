@@ -25,7 +25,7 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       toast.success("✅ Login Successful!");
-      window.location = "/dashboard";
+      window.location = "/invoice";
     } catch (err) {
       const msg = err.response?.data?.message || "❌ Login failed";
       setError(msg);
