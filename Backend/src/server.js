@@ -82,7 +82,15 @@ app.use("/api/manualinvoices", manualInvoiceRoutes);
 app.use("/api/shipping", shippingRoutes);
 app.use("/api/password", passwordRoutes);
 app.use("/api/users", userRoutes);
-
+app.use("/api/connect-mongodb", async (req, res) => {
+  try {
+    await connectDB(process.env.MONGODB_URI);
+    res.json({ message: "Database connected" });
+  } catch (error) {
+    console.error('DB connection error:', error);
+    res.status(500).json({ error: 'Database connection failed', message: error.message });
+  }
+});
 const PORT = process.env.PORT || 8080;
 
 // Database connection for development/local
