@@ -35,16 +35,20 @@ app.use(helmet());
 app.use(express.json({ limit: "2mb" }));
 app.use(morgan("dev"));
 
-// Database connection middleware for serverless
+// Database connection middleware for serverless - simplified
 app.use(async (req, res, next) => {
   try {
-    if (mongoose.connection.readyState !== 1) {
+    // Only connect if not already connected
+    if (mongoose.connection.readyState === 0) {
       await connectDB(process.env.MONGODB_URI);
     }
     next();
   } catch (error) {
     console.error('Database connection middleware error:', error);
-    return res.status(500).json({ error: 'Database connection failed' });
+    return res.status(500).json({
+      error: 'Database connection failed',
+      message: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
   }
 });
 

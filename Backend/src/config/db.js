@@ -3,24 +3,27 @@ import mongoose from "mongoose";
 let cachedConnection = null;
 
 export const connectDB = async (uri) => {
-  // Return existing connection if available
+  // Return existing connection if available and healthy
   if (cachedConnection && mongoose.connection.readyState === 1) {
     return cachedConnection;
   }
 
   try {
-    // Set connection options for serverless environments
+    // Enhanced connection options for serverless environments
     const options = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      maxPoolSize: 10, // Maintain up to 10 socket connections
-      serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
-      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-      bufferCommands: false, // Disable mongoose buffering
-      bufferMaxEntries: 0, // Disable mongoose buffering
+      maxPoolSize: 5, // Reduce pool size for serverless
+      serverSelectionTimeoutMS: 10000, // Increase timeout for serverless cold starts
+      socketTimeoutMS: 45000,
+      maxIdleTimeMS: 30000,
+      // Additional options for better serverless support
+      retryWrites: true,
+      retryReads: true,
     };
 
-    cachedConnection = await mongoose.connect(uri, options);
+    // Ensure URI is properly formatted
+    const connectionUri = uri.replace('mongodb+srv://', 'mongodb+srv://');
+
+    cachedConnection = await mongoose.connect(connectionUri, options);
 
     // Handle connection events
     mongoose.connection.on('error', (err) => {
@@ -33,20 +36,31 @@ export const connectDB = async (uri) => {
       cachedConnection = null;
     });
 
+    mongoose.connection.on('reconnected', () => {
+      console.log('MongoDB reconnected');
+    });
+
     console.log('✅ MongoDB connected successfully');
     return cachedConnection;
   } catch (error) {
-    console.error('❌ MongoDB connection failed:', error);
+    console.error('❌ MongoDB connection failed:', error.message);
     cachedConnection = null;
-    throw error;
+    throw new Error(`Database connection failed: ${error.message}`);
   }
 };
 
+// Health check function
+export const checkDBConnection = () => {
+  return mongoose.connection.readyState === 1;
+};
+
 // Graceful shutdown for development
-process.on('SIGINT', async () => {
-  if (mongoose.connection.readyState === 1) {
-    await mongoose.connection.close();
-    console.log('MongoDB connection closed through app termination');
-  }
-  process.exit(0);
-});
+if (typeof process !== 'undefined' && process.on) {
+  process.on('SIGINT', async () => {
+    if (mongoose.connection.readyState === 1) {
+      await mongoose.connection.close();
+      console.log('MongoDB connection closed through app termination');
+    }
+    process.exit(0);
+  });
+}
