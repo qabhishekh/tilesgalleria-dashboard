@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { API_BASE } from "../../config/api";
-import logo from "../../assets/logos/tiles-logo.png";
 
 export default function Login() {
   const [form, setForm] = useState({ usernameOrEmail: "", password: "" });
@@ -44,7 +43,7 @@ export default function Login() {
         {/* Logo */}
         <div className="flex flex-col items-center mb-6">
           <img
-            src={logo}
+            src="/images/logos/tiles-logo.png"
             alt="Company Logo"
             className="h-45 w-45 object-contain  drop-shadow-lg"
           />
