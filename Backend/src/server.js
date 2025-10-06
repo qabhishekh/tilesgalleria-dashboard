@@ -67,10 +67,11 @@ app.use("/api/users", userRoutes);
 
 const PORT = process.env.PORT || 8080;
 connectDB(process.env.MONGODB_URI).then(()=>{
-  app.listen(PORT, ()=> console.log(`🚀 ${process.env.APP_NAME||"API"} listening on :${PORT}`));
+  console.log(`🚀 ${process.env.APP_NAME||"API"} DB connected`);
 }).catch((e)=>{
   console.error("DB connection failed", e);
-  process.exit(1);
 });
+
+export default app;
 
 
