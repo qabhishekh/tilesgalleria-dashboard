@@ -29,7 +29,7 @@ export const create = asyncHandler(async (req, res) => {
     paymentMode,
     paymentStatus,
     description,
-    attachment: req.file ? req.file.filename : null,
+    attachment: req.file ? req.file.path : null,
   });
 
   res.status(201).json(expense);

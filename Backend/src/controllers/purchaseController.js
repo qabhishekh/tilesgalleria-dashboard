@@ -34,7 +34,7 @@ export const list = asyncHandler(async (req, res) => {
 export const create = asyncHandler(async (req, res) => {
   const body = { ...req.body };
 
-  if (req.file) body.attachFile = req.file.filename;
+  if (req.file) body.attachFile = req.file.path;
 
   if (body.items && typeof body.items === "string") {
     try {
@@ -101,7 +101,7 @@ export const getOne = asyncHandler(async (req, res) => {
 export const update = asyncHandler(async (req, res) => {
   const body = { ...req.body };
 
-  if (req.file) body.attachFile = req.file.filename;
+  if (req.file) body.attachFile = req.file.path;
 
   if (body.items && typeof body.items === "string") {
     try {

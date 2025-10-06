@@ -43,7 +43,7 @@ export const create = asyncHandler(async (req, res) => {
     quantity: qty,
     boxes,
     taxRate,
-    image: req.file ? req.file.filename : null,
+    image: req.file ? req.file.path : null,
   });
 
   res.status(201).json({
@@ -59,7 +59,7 @@ export const update = asyncHandler(async (req, res) => {
 
     // 🖼️ Update image if provided
     if (req.file) {
-      updateData.image = req.file.filename;
+      updateData.image = req.file.path;
     }
 
     // 🔢 Parse numeric fields safely

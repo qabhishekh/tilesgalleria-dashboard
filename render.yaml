@@ -29,6 +29,12 @@ services:
         value: riteshdhebe12345@gmail.com
       - key: SMTP_PASS
         value: your_app_password  # Replace with actual app password
+      - key: CLOUDINARY_CLOUD_NAME
+        value: your_cloud_name
+      - key: CLOUDINARY_API_KEY
+        value: your_api_key
+      - key: CLOUDINARY_API_SECRET
+        value: your_api_secret
 
   - type: web
     name: tilesgalleria-frontend

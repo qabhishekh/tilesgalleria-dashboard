@@ -3,7 +3,7 @@ import Category from "../models/Category.js";
 export const createCategory = async (req, res) => {
   try {
     const { name } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : null;
+    const image = req.file ? req.file.path : null;
 
     if (!name || !image) {
       return res.status(400).json({ message: "Name and image are required" });

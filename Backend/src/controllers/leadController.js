@@ -28,7 +28,7 @@ export const create = asyncHandler(async (req, res) => {
     address,
     status,
     notes,
-    attachment: req.file ? req.file.filename : null,
+    attachment: req.file ? req.file.path : null,
   });
 
   res.status(201).json(lead);
@@ -37,7 +37,7 @@ export const create = asyncHandler(async (req, res) => {
 // Update lead
 export const update = asyncHandler(async (req, res) => {
   const updateData = { ...req.body };
-  if (req.file) updateData.attachment = req.file.filename;
+  if (req.file) updateData.attachment = req.file.path;
 
   const lead = await Lead.findByIdAndUpdate(req.params.id, updateData, {
     new: true,
