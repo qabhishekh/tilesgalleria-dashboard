@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar";
 import { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import toast from "react-hot-toast";
+import logo from "../assets/logos/tiles-logo.png";
 
 export default function Layout() {
   const [open, setOpen] = useState(true);
@@ -55,7 +56,7 @@ export default function Layout() {
           <div className="flex items-center gap-3 ml-auto">
             <span className="font-medium text-gray-700">{user?.name || "User"}</span>
             <img
-              src={user?.avatar || "/images/logos/tiles-logo.png"}
+              src={user?.avatar || logo}
               alt="user"
               className="w-10 h-10 rounded-full border shadow-sm object-cover"
             />

@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import logo from "../assets/logos/tiles-logo.png";
 
 export default function Sidebar({ open, mobileOpen, setMobileOpen }) {
   const location = useLocation();
@@ -60,7 +61,7 @@ export default function Sidebar({ open, mobileOpen, setMobileOpen }) {
             } flex items-center justify-center`}
           >
             <img
-              src="/images/logos/tiles-logo.png"
+              src={logo}
               alt="logo"
               className="w-full h-full object-contain rounded-full"
             />
@@ -107,7 +108,7 @@ export default function Sidebar({ open, mobileOpen, setMobileOpen }) {
         <div className="flex items-center justify-between mb-4 px-2">
           <div className="rounded-full bg-white shadow-[0_4px_15px_rgba(0,0,0,0.35)] p-1">
             <img
-              src="/images/logos/tiles-logo.png"
+              src={logo}
               alt="logo"
               className="w-16 h-16 rounded-full object-contain"
             />
