@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: #ffffff;
+}
+
+@media print {
+  .no-print { display: none !important; }
+
+  body * { visibility: hidden; }
+  #print-root, #print-root * { visibility: visible; }
+
+  @page { size: A4; margin: 12mm; }
+
+  #print-root {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    padding: 0 !important;
+  }
+}
