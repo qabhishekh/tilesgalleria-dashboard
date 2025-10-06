@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import image from "/assets/logos/tiles-logo.png";
 import { API_BASE } from "../../config/api";
 
 export default function ViewQuotation() {
@@ -56,7 +55,7 @@ export default function ViewQuotation() {
       <div id="print-root" className="invoice-container bg-white rounded-lg shadow p-6">
         <header className="flex justify-between items-start border-b pb-4">
           <div className="logo">
-            <img src={image} alt="Logo" style={{ maxWidth: "150px" }} />
+            <img src="/assets/logos/tiles-logo.png" alt="Logo" style={{ maxWidth: "150px" }} />
           </div>
           <div className="text-right">
             <p className="font-bold">TILES GALLERIA AUSTRALIA PTY LTD</p>

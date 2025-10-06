@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE } from "../../config/api";
-import image from "/assets/logos/tiles-logo.png";
 
 export default function ViewPurchase() {
   const { id } = useParams();
@@ -66,7 +65,7 @@ export default function ViewPurchase() {
         <header className="flex justify-between items-start border-b pb-4">
           <div className="logo">
             <img
-              src={image}
+              src="/assets/logos/tiles-logo.png"
               alt="Logo"
               style={{ maxWidth: "150px" }}
             />

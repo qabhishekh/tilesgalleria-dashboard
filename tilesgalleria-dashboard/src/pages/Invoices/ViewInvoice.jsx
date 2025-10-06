@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
-import image from "/assets/logos/tiles-logo.png";
 import { API_BASE } from "../../config/api";
 
 export default function ViewInvoice() {
@@ -55,7 +54,7 @@ export default function ViewInvoice() {
         {/* ===== Header ===== */}
         <div className="flex justify-between items-start mb-6">
           <div>
-            <img src={image} alt="Company Logo" className="h-30 mb-2" />
+            <img src="/assets/logos/tiles-logo.png" alt="Company Logo" className="h-30 mb-2" />
             <p className="font-bold text-lg">TILES GALLERIA</p>
             <p>33 First Avenue Kilkenny, SA 5009</p>
             <p>ABN: 91 672 836 038</p>
