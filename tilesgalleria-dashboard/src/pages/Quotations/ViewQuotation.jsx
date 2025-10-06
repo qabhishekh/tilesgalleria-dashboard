@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import image from "../../assets/logos/tiles-logo.png";
+import image from "../../../public/assets/logos/tiles-logo.png";
 import { API_BASE } from "../../config/api";
 
 export default function ViewQuotation() {

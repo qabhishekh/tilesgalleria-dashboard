@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE } from "../../config/api";
-import image from "../../assets/logos/tiles-logo.png";
+import image from "../../../public/assets/logos/tiles-logo.png";
 
 export default function ViewPurchase() {
   const { id } = useParams();

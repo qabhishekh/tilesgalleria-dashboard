@@ -43,7 +43,7 @@ export default function Login() {
         {/* Logo */}
         <div className="flex flex-col items-center mb-6">
           <img
-            src="/src/assets/logos/tiles-logo.png"
+            src="/assets/logos/tiles-logo.png"
             alt="Company Logo"
             className="h-45 w-45 object-contain  drop-shadow-lg"
           />
