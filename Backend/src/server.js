@@ -82,7 +82,7 @@ app.use("/api/manualinvoices", manualInvoiceRoutes);
 app.use("/api/shipping", shippingRoutes);
 app.use("/api/password", passwordRoutes);
 app.use("/api/users", userRoutes);
-app.use("/", async (req, res) => {
+app.get("/api/dbtest", async (req, res) => {
   try {
     await connectDB(process.env.MONGODB_URI);
     res.json({ message: "Database connected" });
