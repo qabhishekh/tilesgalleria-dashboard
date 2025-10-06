@@ -1,5 +1,5 @@
 // controllers/customerController.js
-import Customer from "../models/Customer.js";
+import { Customer } from "../models/Customer.js";
 
 // 📌 List all customers
 export const list = async (req, res) => {

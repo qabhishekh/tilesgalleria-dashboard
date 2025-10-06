@@ -1,11 +1,11 @@
 import "dotenv/config";
 import bcrypt from "bcryptjs";
 import { connectDB } from "../config/db.js";
-import { User } from "../models/User.js";
-import { Customer } from "../models/Customer.js";
-import { Product } from "../models/Product.js";
-import { Invoice } from "../models/Invoice.js";
-import { Quotation } from "../models/Quotation.js";
+import User from "../models/User.js";
+import Customer from "../models/Customer.js";
+import Product from "../models/Product.js";
+import Invoice from "../models/Invoice.js";
+import Quotation from "../models/Quotation.js";
 
 await connectDB(process.env.MONGODB_URI);
 
@@ -33,10 +33,27 @@ const products = await Product.insertMany([
 await Invoice.create({
   invoiceNo: 100024,
   customer: cust._id,
-  companyName: "Rajit",
-  status: "paid",
-  items: [ { product: products[0]._id, name: products[0].name, qty: 1, price: 2100, taxRate: 0, amount: 2100 } ],
-  subtotal: 2100, tax: 0, total: 2100
+  customerName: "Rajit",
+  shippingAddress: {
+    name: "Rajit",
+    addressLine: "123 Test Street, Test City"
+  },
+  items: [ { 
+    product: products[0]._id, 
+    name: products[0].name, 
+    qty: 1, 
+    price: 2100, 
+    taxRate: 0, 
+    total: 2100,
+    productType: products[0].productType,
+    texture: products[0].texture,
+    size: products[0].size,
+    image: products[0].image
+  } ],
+  subTotal: 2100,
+  taxTotal: 0,
+  grandTotal: 2100,
+  status: "paid"
 });
 
 await Quotation.create({
@@ -45,7 +62,19 @@ await Quotation.create({
   quotationDate: new Date("2025-07-22"),
   amount: 2100,
   status: "sent",
-  items: [ { product: products[1]._id, name: products[1].name, qty: 1, price: 2100, taxRate: 0, amount: 2100 } ]
+  grandTotal: 2100,
+  items: [ { 
+    product: products[1]._id, 
+    name: products[1].name, 
+    qty: 1, 
+    price: 2100, 
+    gst: 0, 
+    total: 2100,
+    productType: products[1].productType,
+    texture: products[1].texture,
+    size: products[1].size,
+    image: products[1].image
+  } ]
 });
 
 console.log("✅ Seeded admin (admin/admin123) + sample data.");

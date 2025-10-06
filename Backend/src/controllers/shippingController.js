@@ -1,5 +1,5 @@
 import ShippingAddress from "../models/ShippingAddress.js";
-import Customer from "../models/Customer.js"; 
+import { Customer } from "../models/Customer.js"; 
 
 
 import mongoose from "mongoose";

@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { User } from "../models/User.js";
+import User from "../models/User.js";
 
 function sign(user) {
   return jwt.sign(
