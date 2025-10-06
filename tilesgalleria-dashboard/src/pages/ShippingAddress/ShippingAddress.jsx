@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaPlus, FaEllipsisV, FaEdit, FaTrash } from "react-icons/fa";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 export default function ShippingAddress() {
   const [openDropdownId, setOpenDropdownId] = useState(null);
@@ -16,7 +17,7 @@ export default function ShippingAddress() {
   // Fetch Customers
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/customers", {
+      .get(`${API_BASE}/api/customers`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setCustomers(res.data))
@@ -26,7 +27,7 @@ export default function ShippingAddress() {
   // Fetch Shipping Addresses
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/shipping", {
+      .get(`${API_BASE}/api/shipping`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setAddresses(res.data))
@@ -37,7 +38,7 @@ export default function ShippingAddress() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8080/api/shipping", form, {
+      const res = await axios.post(`${API_BASE}/api/shipping`, form, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAddresses([res.data, ...addresses]);
@@ -54,7 +55,7 @@ export default function ShippingAddress() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this shipping address?")) return;
     try {
-      await axios.delete(`http://localhost:8080/api/shipping/${id}`, {
+      await axios.delete(`${API_BASE}/api/shipping/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAddresses(addresses.filter((a) => a._id !== id));
@@ -82,7 +83,7 @@ export default function ShippingAddress() {
     e.preventDefault();
     try {
       const res = await axios.put(
-        `http://localhost:8080/api/shipping/${editForm.id}`,
+        `${API_BASE}/api/shipping/${editForm.id}`,
         { customerId: editForm.customerId, shippingAddress: editForm.shippingAddress },
         { headers: { Authorization: `Bearer ${token}` } }
       );

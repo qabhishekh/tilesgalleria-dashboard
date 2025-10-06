@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaPlus, FaBuilding, FaEllipsisV } from "react-icons/fa";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 export default function Vendors() {
   const [vendors, setVendors] = useState([]);
@@ -22,7 +23,7 @@ export default function Vendors() {
   // 🔹 Fetch vendors
   const fetchVendors = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/vendors", {
+      const res = await axios.get(`${API_BASE}/api/vendors`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setVendors(res.data);
@@ -68,12 +69,12 @@ export default function Vendors() {
     try {
       if (editMode) {
         await axios.put(
-          `http://localhost:8080/api/vendors/${currentId}`,
+          `${API_BASE}/api/vendors/${currentId}`,
           form,
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
-        await axios.post("http://localhost:8080/api/vendors", form, {
+        await axios.post(`${API_BASE}/api/vendors`, form, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }
@@ -88,7 +89,7 @@ export default function Vendors() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this vendor?")) return;
     try {
-      await axios.delete(`http://localhost:8080/api/vendors/${id}`, {
+      await axios.delete(`${API_BASE}/api/vendors/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchVendors();

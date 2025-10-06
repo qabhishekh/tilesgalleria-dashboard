@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 export default function Invoices() {
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -22,10 +23,10 @@ export default function Invoices() {
     const fetchAll = async () => {
       try {
         const [normalRes, manualRes] = await Promise.all([
-          axios.get("http://localhost:8080/api/invoices", {
+          axios.get(`${API_BASE}/api/invoices`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:8080/api/manualinvoices", {
+          axios.get(`${API_BASE}/api/manualinvoices`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
@@ -56,8 +57,8 @@ export default function Invoices() {
     try {
       const url =
         type === "manual"
-          ? `http://localhost:8080/api/manualinvoices/${id}`
-          : `http://localhost:8080/api/invoices/${id}`;
+          ? `${API_BASE}/api/manualinvoices/${id}`
+          : `${API_BASE}/api/invoices/${id}`;
 
       await axios.put(
         url,
@@ -79,8 +80,8 @@ export default function Invoices() {
     try {
       const url =
         type === "manual"
-          ? `http://localhost:8080/api/manualinvoices/${id}`
-          : `http://localhost:8080/api/invoices/${id}`;
+          ? `${API_BASE}/api/manualinvoices/${id}`
+          : `${API_BASE}/api/invoices/${id}`;
 
       await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } });
 

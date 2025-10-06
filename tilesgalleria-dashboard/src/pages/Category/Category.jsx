@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 const Category = () => {
   const [name, setName] = useState("");
@@ -11,7 +12,7 @@ const Category = () => {
   // Fetch categories
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/categories");
+      const res = await axios.get(`${API_BASE}/api/categories`);
       setCategories(res.data.categories || []);
     } catch (err) {
       console.error("Error fetching categories:", err);
@@ -28,7 +29,7 @@ const Category = () => {
     formData.append("image", image);
 
     try {
-      await axios.post("http://localhost:8080/api/categories", formData, {
+      await axios.post(`${API_BASE}/api/categories`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -93,7 +94,7 @@ const Category = () => {
                   <td className="px-4 py-3 text-sm font-medium">{cat.name}</td>
                   <td className="px-4 py-3">
                     <img
-                      src={`http://localhost:8080${cat.image}`}
+                      src={`${API_BASE}${cat.image}`}
                       alt={cat.name}
                       className="w-12 h-12 rounded-md object-cover border"
                     />

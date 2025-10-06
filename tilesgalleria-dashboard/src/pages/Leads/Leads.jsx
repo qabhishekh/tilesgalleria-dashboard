@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { FaPlus } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "../../config/api";
 
 export default function Leads() {
   const [leads, setLeads] = useState([]);
@@ -24,7 +25,7 @@ export default function Leads() {
   useEffect(() => {
     const fetchLeads = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/leads", {
+        const res = await axios.get(`${API_BASE}/api/leads`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setLeads(res.data);
@@ -48,7 +49,7 @@ export default function Leads() {
       const fd = new FormData();
       Object.entries(form).forEach(([k, v]) => fd.append(k, v));
 
-      await axios.post("http://localhost:8080/api/leads", fd, {
+      await axios.post(`${API_BASE}/api/leads`, fd, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -68,7 +69,7 @@ export default function Leads() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this lead?")) return;
     try {
-      await axios.delete(`http://localhost:8080/api/leads/${id}`, {
+      await axios.delete(`${API_BASE}/api/leads/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setLeads(leads.filter((l) => l._id !== id));
@@ -82,7 +83,7 @@ export default function Leads() {
  const handleStatusChange = async (id, newStatus) => {
   try {
     const res = await axios.patch(
-      `http://localhost:8080/api/leads/${id}`,
+      `${API_BASE}/api/leads/${id}`,
       { status: newStatus },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -160,19 +161,19 @@ export default function Leads() {
                       {lead.attachment ? (
                         lead.attachment.match(/\.(jpg|jpeg|png|gif)$/i) ? (
                           <a
-                            href={`http://localhost:8080/uploads/${lead.attachment}`}
+                            href={`${API_BASE}/uploads/${lead.attachment}`}
                             target="_blank"
                             rel="noreferrer"
                           >
                             <img
-                              src={`http://localhost:8080/uploads/${lead.attachment}`}
+                              src={`${API_BASE}/uploads/${lead.attachment}`}
                               alt="attachment"
                               className="w-12 h-12 object-cover rounded shadow"
                             />
                           </a>
                         ) : (
                           <a
-                            href={`http://localhost:8080/uploads/${lead.attachment}`}
+                            href={`${API_BASE}/uploads/${lead.attachment}`}
                             target="_blank"
                             rel="noreferrer"
                             className="text-blue-600 underline"

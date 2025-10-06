@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 import {
   FaUserCog,
   FaBuilding,
@@ -34,15 +35,15 @@ export default function Settings() {
     const headers = { Authorization: `Bearer ${token}` };
 
     // Company / Invoice / Bank (already present)
-    axios.get("http://localhost:8080/api/settings/company", { headers })
+    axios.get(`${API_BASE}/api/settings/company`, { headers })
       .then(res => setCompany(res.data || {})).catch(() => { });
-    axios.get("http://localhost:8080/api/settings/invoice", { headers })
+    axios.get(`${API_BASE}/api/settings/invoice`, { headers })
       .then(res => setInvoice(res.data || {})).catch(() => { });
-    axios.get("http://localhost:8080/api/settings/bank", { headers })
+    axios.get(`${API_BASE}/api/settings/bank`, { headers })
       .then(res => setBank(res.data || {})).catch(() => { });
 
     // Load Account
-    axios.get("http://localhost:8080/api/users/me", { headers })
+    axios.get(`${API_BASE}/api/users/me`, { headers })
       .then(res => {
         const nameParts = (res.data.name || "").split(" ");
         setAccount({
@@ -58,26 +59,26 @@ export default function Settings() {
   // Save helpers
   const saveAccount = async () => {
     const headers = { Authorization: `Bearer ${token}` };
-    await axios.put("http://localhost:8080/api/auth/update", account, { headers });
+    await axios.put(`${API_BASE}/api/auth/update`, account, { headers });
     alert("✅ Account updated!");
   };
 
   const saveCompany = async () => {
-    await axios.put("http://localhost:8080/api/settings/company", company, {
+    await axios.put(`${API_BASE}/api/settings/company`, company, {
       headers: { Authorization: `Bearer ${token}` }
     });
     alert("✅ Company settings saved!");
   };
 
   const saveInvoice = async () => {
-    await axios.put("http://localhost:8080/api/settings/invoice", invoice, {
+    await axios.put(`${API_BASE}/api/settings/invoice`, invoice, {
       headers: { Authorization: `Bearer ${token}` }
     });
     alert("✅ Invoice settings saved!");
   };
 
   const saveBank = async () => {
-    await axios.put("http://localhost:8080/api/settings/bank", bank, {
+    await axios.put(`${API_BASE}/api/settings/bank`, bank, {
       headers: { Authorization: `Bearer ${token}` }
     });
     alert("✅ Bank settings saved!");

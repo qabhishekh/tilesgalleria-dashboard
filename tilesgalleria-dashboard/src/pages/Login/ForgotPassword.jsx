@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -11,7 +12,7 @@ export default function ForgotPassword() {
     setMsg("");
     setError("");
     try {
-      const res = await axios.post("http://localhost:8080/api/password/forgot", { email });
+      const res = await axios.post(`${API_BASE}/api/password/forgot`, { email });
       setMsg(res.data.message);
     } catch (err) {
       setError(err.response?.data?.message || "Error sending reset email");

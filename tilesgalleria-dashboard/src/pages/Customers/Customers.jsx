@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaPlus, FaEllipsisV, FaEdit, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 const Customers = () => {
   const [customers, setCustomers] = useState([]);
@@ -16,7 +17,7 @@ const Customers = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/customers", {
+        const res = await axios.get(`${API_BASE}/api/customers`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCustomers(res.data);
@@ -33,7 +34,7 @@ const Customers = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this customer?")) return;
     try {
-      await axios.delete(`http://localhost:8080/api/customers/${id}`, {
+      await axios.delete(`${API_BASE}/api/customers/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCustomers(customers.filter((c) => c._id !== id));

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 import Select from "react-select";
 
 export default function AddPurchases() {
@@ -17,7 +18,7 @@ export default function AddPurchases() {
   useEffect(() => {
     // Vendors
     axios
-      .get("http://localhost:8080/api/vendors", {
+      .get(`${API_BASE}/api/vendors`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setVendors(res.data))
@@ -25,7 +26,7 @@ export default function AddPurchases() {
 
     // Categories
     axios
-      .get("http://localhost:8080/api/categories", {
+      .get(`${API_BASE}/api/categories`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setCategories(res.data.categories || []))  // ✅ FIXED
@@ -34,7 +35,7 @@ export default function AddPurchases() {
 
     // Products
     axios
-      .get("http://localhost:8080/api/products", {
+      .get(`${API_BASE}/api/products`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setProducts(res.data))
@@ -218,7 +219,7 @@ export default function AddPurchases() {
       formData.append("advance", totals.advance);
       formData.append("balance", totals.balance);
 
-      const res = await axios.post("http://localhost:8080/api/purchases", formData, {
+      const res = await axios.post(`${API_BASE}/api/purchases`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -438,7 +439,7 @@ export default function AddPurchases() {
                         src={
                           row.image.startsWith("http")
                             ? row.image
-                            : `http://localhost:8080/uploads/${row.image}`
+                            : `${API_BASE}/uploads/${row.image}`
                         }
                         alt="product"
                         className="w-full h-full object-cover"

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 export default function EditLead() {
   const { id } = useParams(); // URL से leadId लेना
@@ -24,7 +25,7 @@ export default function EditLead() {
   useEffect(() => {
     const fetchLead = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/api/leads/${id}`, {
+        const res = await axios.get(`${API_BASE}/api/leads/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setForm(res.data);
@@ -50,7 +51,7 @@ export default function EditLead() {
       const fd = new FormData();
       Object.entries(form).forEach(([k, v]) => fd.append(k, v));
 
-      await axios.patch(`http://localhost:8080/api/leads/${id}`, fd, {
+      await axios.patch(`${API_BASE}/api/leads/${id}`, fd, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -151,7 +152,7 @@ export default function EditLead() {
               <p className="text-sm text-blue-600 mt-1">
                 Current:{" "}
                 <a
-                  href={`http://localhost:8080/uploads/${form.attachment}`}
+                  href={`${API_BASE}/uploads/${form.attachment}`}
                   target="_blank"
                   rel="noreferrer"
                 >

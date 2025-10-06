@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Select from "react-select";
+import { API_BASE } from "../../config/api";
 
 export default function AddQuotation() {
   const [products, setProducts] = useState([]);
@@ -45,7 +46,7 @@ export default function AddQuotation() {
   // 🔹 Fetch Customers
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/customers", {
+      .get(`${API_BASE}/api/customers`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setCustomers(res.data))
@@ -55,14 +56,14 @@ export default function AddQuotation() {
   // 🔹 Fetch Products + Categories
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/products", {
+      .get(`${API_BASE}/api/products`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setProducts(res.data))
       .catch((err) => console.error("Product fetch error", err));
 
     axios
-      .get("http://localhost:8080/api/categories", {
+      .get(`${API_BASE}/api/categories`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setCategories(res.data.categories || []))
@@ -133,7 +134,7 @@ export default function AddQuotation() {
         notes: notes,
       };
 
-      await axios.post("http://localhost:8080/api/quotations", payload, {
+      await axios.post(`${API_BASE}/api/quotations`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -386,7 +387,7 @@ export default function AddQuotation() {
                       src={
                         row.image.startsWith("http")
                           ? row.image
-                          : `http://localhost:8080/uploads/${row.image}`
+                          : `${API_BASE}/uploads/${row.image}`
                       }
                       alt="product"
                       className="w-12 h-12 mx-auto object-cover rounded"

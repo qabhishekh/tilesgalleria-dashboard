@@ -2,6 +2,7 @@ import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 export default function PrePurchases() {
   const [prePurchases, setPrePurchases] = useState([]);
@@ -22,7 +23,7 @@ export default function PrePurchases() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/prepurchases");
+        const res = await axios.get(`${API_BASE}/api/prepurchases`);
         setPrePurchases(res.data);
       } catch (err) {
         console.error("Fetch error:", err);
@@ -43,7 +44,7 @@ export default function PrePurchases() {
       if (editMode && currentId) {
         // Update
         const res = await axios.put(
-          `http://localhost:8080/api/prepurchases/${currentId}`,
+          `${API_BASE}/api/prepurchases/${currentId}`,
           form
         );
         setPrePurchases((prev) =>
@@ -52,7 +53,7 @@ export default function PrePurchases() {
         alert("✅ Pre Purchase updated successfully");
       } else {
         // Create
-        const res = await axios.post("http://localhost:8080/api/prepurchases", form);
+        const res = await axios.post(`${API_BASE}/api/prepurchases`, form);
         setPrePurchases([...prePurchases, res.data]);
         alert("✅ Pre Purchase added successfully");
       }
@@ -72,7 +73,7 @@ export default function PrePurchases() {
     if (!window.confirm("Are you sure you want to delete this Pre Purchase?")) return;
 
     try {
-      await axios.delete(`http://localhost:8080/api/prepurchases/${id}`);
+      await axios.delete(`${API_BASE}/api/prepurchases/${id}`);
       setPrePurchases((prev) => prev.filter((p) => p._id !== id));
       alert("✅ Pre Purchase deleted");
     } catch (err) {

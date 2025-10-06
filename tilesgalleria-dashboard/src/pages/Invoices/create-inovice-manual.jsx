@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Select from "react-select";
+import { API_BASE } from "../../config/api";
 
 const BOX_COVERAGE = 2.1;
 
@@ -56,7 +57,7 @@ export default function CreateManualInvoice() {
   // 🔹 Fetch Products
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/products", {
+      .get(`${API_BASE}/api/products`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setProducts(res.data))
@@ -66,7 +67,7 @@ export default function CreateManualInvoice() {
   // 🔹 Fetch Categories
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/categories", {
+      .get(`${API_BASE}/api/categories`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setCategories(res.data.categories || res.data || []))
@@ -224,7 +225,7 @@ export default function CreateManualInvoice() {
         gstType: gstType.value, // ✅ send to backend if you want
       };
 
-      await axios.post("http://localhost:8080/api/manualinvoices", payload, {
+      await axios.post(`${API_BASE}/api/manualinvoices`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -417,7 +418,7 @@ export default function CreateManualInvoice() {
                       src={
                         row.image.startsWith("http")
                           ? row.image
-                          : `http://localhost:8080/uploads/${row.image}`
+                          : `${API_BASE}/uploads/${row.image}`
                       }
                       alt="product"
                       className="w-12 h-12 mx-auto object-cover rounded"

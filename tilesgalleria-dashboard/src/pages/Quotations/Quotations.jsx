@@ -14,6 +14,7 @@ import {
   FaEnvelope,
   FaPlus,
 } from "react-icons/fa";
+import { API_BASE } from "../../config/api";
 
 export default function Quotations() {
   const [quotations, setQuotations] = useState([]);
@@ -28,10 +29,10 @@ export default function Quotations() {
     const fetchQuotations = async () => {
       try {
         const [normalRes, manualRes] = await Promise.all([
-          axios.get("http://localhost:8080/api/quotations", {
+          axios.get(`${API_BASE}/api/quotations`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:8080/api/manualquotations", {
+          axios.get(`${API_BASE}/api/manualquotations`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
@@ -57,8 +58,8 @@ export default function Quotations() {
     try {
       const url =
         type === "manual"
-          ? `http://localhost:8080/api/manualquotations/${id}`
-          : `http://localhost:8080/api/quotations/${id}`;
+          ? `${API_BASE}/api/manualquotations/${id}`
+          : `${API_BASE}/api/quotations/${id}`;
 
       await axios.delete(url, {
         headers: { Authorization: `Bearer ${token}` },
@@ -77,8 +78,8 @@ export default function Quotations() {
     try {
       const url =
         type === "manual"
-          ? `http://localhost:8080/api/manualquotations/${id}/status`
-          : `http://localhost:8080/api/quotations/${id}/status`;
+          ? `${API_BASE}/api/manualquotations/${id}/status`
+          : `${API_BASE}/api/quotations/${id}/status`;
 
       const { data } = await axios.patch(
         url,

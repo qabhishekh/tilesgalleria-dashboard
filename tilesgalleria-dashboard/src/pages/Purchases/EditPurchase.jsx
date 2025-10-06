@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 export default function EditPurchases() {
   const { id } = useParams(); // /edit-purchase/:id
@@ -32,13 +33,13 @@ export default function EditPurchases() {
     const fetchAll = async () => {
       try {
         const [vRes, pRes, purchaseRes] = await Promise.all([
-          axios.get("http://localhost:8080/api/vendors", {
+          axios.get(`${API_BASE}/api/vendors`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:8080/api/products", {
+          axios.get(`${API_BASE}/api/products`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get(`http://localhost:8080/api/purchases/${id}`, {
+          axios.get(`${API_BASE}/api/purchases/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
@@ -163,7 +164,7 @@ export default function EditPurchases() {
       formData.append("advance", totals.advance);
       formData.append("balance", totals.balance);
 
-      await axios.put(`http://localhost:8080/api/purchases/${id}`, formData, {
+      await axios.put(`${API_BASE}/api/purchases/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

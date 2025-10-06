@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 export default function AddProducts() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export default function AddProducts() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/categories");
+        const res = await axios.get(`${API_BASE}/api/categories`);
         setCategories(res.data.categories || []);
       } catch (err) {
         console.error("Error fetching categories:", err);
@@ -53,7 +54,7 @@ export default function AddProducts() {
         formData.append(key, value);
       });
 
-      const res = await axios.post("http://localhost:8080/api/products", formData, {
+      const res = await axios.post(`${API_BASE}/api/products`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

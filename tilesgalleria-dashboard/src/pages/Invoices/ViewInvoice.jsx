@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import image from "../../assets/logos/tiles-logo.png";
+import { API_BASE } from "../../config/api";
 
 export default function ViewInvoice() {
   const { id } = useParams();
@@ -15,8 +16,8 @@ export default function ViewInvoice() {
     const fetchInvoice = async () => {
       try {
         const url = isManual
-          ? `http://localhost:8080/api/manualinvoices/${id}`
-          : `http://localhost:8080/api/invoices/${id}`;
+          ? `${API_BASE}/api/manualinvoices/${id}`
+          : `${API_BASE}/api/invoices/${id}`;
 
         const res = await axios.get(url, {
           headers: { Authorization: `Bearer ${token}` },

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaPlus, FaEllipsisV, FaTrash, FaEdit, FaFileImage } from "react-icons/fa";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 export default function Expenses() {
   const [expenses, setExpenses] = useState([]);
@@ -26,7 +27,7 @@ export default function Expenses() {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/expenses", {
+        const res = await axios.get(`${API_BASE}/api/expenses`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setExpenses(res.data);
@@ -88,7 +89,7 @@ export default function Expenses() {
       if (editMode && currentId) {
         // ✅ Update
         const res = await axios.put(
-          `http://localhost:8080/api/expenses/${currentId}`,
+          `${API_BASE}/api/expenses/${currentId}`,
           fd,
           {
             headers: {
@@ -104,7 +105,7 @@ export default function Expenses() {
         alert("✅ Expense updated");
       } else {
         // ✅ Add
-        const res = await axios.post("http://localhost:8080/api/expenses", fd, {
+        const res = await axios.post(`${API_BASE}/api/expenses`, fd, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
@@ -125,13 +126,13 @@ export default function Expenses() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this expense?")) return;
     try {
-      await axios.delete(`http://localhost:8080/api/expenses/${id}`, {
+      await axios.delete(`${API_BASE}/api/expenses/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setExpenses(expenses.filter((e) => e._id !== id));
       alert("✅ Deleted");
     } catch (err) {
-      alert("❌ Failed to delete");
+      alert("❌ Failed to delete",err);
     }
     setOpenDropdownId(null);
   };
@@ -213,7 +214,7 @@ export default function Expenses() {
                       <td className="px-4 py-2">
                         {exp.attachment ? (
                           <a
-                            href={`http://localhost:8080/uploads/${exp.attachment}`}
+                            href={`${API_BASE}/uploads/${exp.attachment}`}
                             target="_blank"
                             rel="noreferrer"
                             className="flex items-center gap-1 text-blue-600 hover:underline"

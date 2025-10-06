@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 export default function EditInvoice({ type = "normal" }) {
   const { id } = useParams();
@@ -21,8 +22,8 @@ export default function EditInvoice({ type = "normal" }) {
   // ✅ Base URL depends on type
   const baseUrl =
     type === "manual"
-      ? "http://localhost:8080/api/manualinvoices"
-      : "http://localhost:8080/api/invoices";
+      ? `${API_BASE}/api/manualinvoices`
+      : `${API_BASE}/api/invoices`;
 
   // 🔹 Fetch invoice details by ID
   useEffect(() => {

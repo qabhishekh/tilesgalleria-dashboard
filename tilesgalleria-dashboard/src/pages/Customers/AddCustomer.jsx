@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 const AddCustomer = () => {
   const [form, setForm] = useState({
@@ -20,7 +21,7 @@ const AddCustomer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8080/api/customers", form, {
+      const res = await axios.post(`${API_BASE}/api/customers`, form, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

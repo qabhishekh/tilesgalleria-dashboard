@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 export default function EditProduct() {
   const { id } = useParams(); // product id from URL
@@ -27,12 +28,12 @@ export default function EditProduct() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/api/products/${id}`, {
+        const res = await axios.get(`${API_BASE}/api/products/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setForm(res.data);
         if (res.data.image) {
-          setPreview(`http://localhost:8080/uploads/${res.data.image}`);
+          setPreview(`${API_BASE}/uploads/${res.data.image}`);
         }
       } catch (err) {
         setError("❌ Failed to load product");
@@ -68,7 +69,7 @@ export default function EditProduct() {
         formData.append("image", file);
       }
 
-      await axios.put(`http://localhost:8080/api/products/${id}`, formData, {
+      await axios.put(`${API_BASE}/api/products/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

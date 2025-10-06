@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 import {
   FaEdit,
   FaEye,
@@ -31,7 +32,7 @@ export default function Purchases() {
   useEffect(() => {
     const fetchPurchases = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/purchases", {
+        const res = await axios.get(`${API_BASE}/api/purchases`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPurchases(res.data);
@@ -50,7 +51,7 @@ export default function Purchases() {
     if (!window.confirm("Are you sure you want to delete this purchase?")) return;
 
     try {
-      await axios.delete(`http://localhost:8080/api/purchases/${id}`, {
+      await axios.delete(`${API_BASE}/api/purchases/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPurchases((prev) => prev.filter((p) => p._id !== id));
@@ -71,7 +72,7 @@ export default function Purchases() {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:8080/api/prepurchases",
+        `${API_BASE}/api/prepurchases`,
         preForm,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -175,7 +176,7 @@ export default function Purchases() {
                   <td className="px-4 py-2 text-center">
                     {p.attachFile ? (
                       <a
-                        href={`http://localhost:8080/uploads/${p.attachFile}`}
+                        href={`${API_BASE}/uploads/${p.attachFile}`}
                         target="_blank"
                         rel="noreferrer"
                         className="text-indigo-600 underline"

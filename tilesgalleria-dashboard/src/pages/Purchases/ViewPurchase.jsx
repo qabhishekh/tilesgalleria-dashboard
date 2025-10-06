@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 import image from "../../assets/logos/tiles-logo.png";
 
 export default function ViewPurchase() {
@@ -15,10 +16,10 @@ export default function ViewPurchase() {
     async function fetchData() {
       try {
         const [purchaseRes, productsRes] = await Promise.all([
-          axios.get(`http://localhost:8080/api/purchases/${id}`, {
+          axios.get(`${API_BASE}/api/purchases/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:8080/api/products", {
+          axios.get(`${API_BASE}/api/products`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
@@ -125,7 +126,7 @@ export default function ViewPurchase() {
                             src={
                               prod.image.startsWith("http")
                                 ? prod.image
-                                : `http://localhost:8080/uploads/${prod.image}`
+                                : `${API_BASE}/uploads/${prod.image}`
                             }
                             alt={prod.name}
                             className="h-12 w-12 object-cover rounded mx-auto"

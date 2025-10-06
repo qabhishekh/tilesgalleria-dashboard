@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 const EditCustomer = () => {
   const { id } = useParams(); // URL से id लो
@@ -20,7 +21,7 @@ const EditCustomer = () => {
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/api/customers/${id}`, {
+        const res = await axios.get(`${API_BASE}/api/customers/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setForm(res.data);
@@ -43,7 +44,7 @@ const EditCustomer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8080/api/customers/${id}`, form, {
+      await axios.put(`${API_BASE}/api/customers/${id}`, form, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

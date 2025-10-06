@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FaUsers, FaFileAlt, FaShoppingCart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function Dashboard() {
 
     const fetchDashboard = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/dashboard/summary", {
+        const res = await axios.get(`${API_BASE}/api/dashboard/summary`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

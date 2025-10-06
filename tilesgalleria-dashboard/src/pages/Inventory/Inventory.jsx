@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../../config/api";
 
 export default function Inventory() {
   const [products, setProducts] = useState([]);
@@ -26,7 +27,7 @@ export default function Inventory() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/products", {
+        const res = await axios.get(`${API_BASE}/api/products`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setProducts(res.data);
@@ -44,7 +45,7 @@ export default function Inventory() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      await axios.delete(`http://localhost:8080/api/products/${id}`, {
+      await axios.delete(`${API_BASE}/api/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProducts(products.filter((p) => p._id !== id));
@@ -89,7 +90,7 @@ export default function Inventory() {
 
   try {
     const res = await axios.put(
-      `http://localhost:8080/api/products/${productId}`,   // ✅ fixed
+      `${API_BASE}/api/products/${productId}`,   // ✅ fixed
       { quantity: newQty, boxes: newBoxes },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -115,7 +116,7 @@ export default function Inventory() {
     formData.append("file", csvFile); // 👈 must match backend multer field name
 
     try {
-      await axios.post("http://localhost:8080/api/products/bulk/import", formData, {
+      await axios.post(`${API_BASE}/api/products/bulk/import`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -133,7 +134,7 @@ export default function Inventory() {
   // 🔹 Bulk Export
   const handleBulkExport = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/products/bulk/export", {
+      const res = await axios.get(`${API_BASE}/api/products/bulk/export`, {
         headers: { Authorization: `Bearer ${token}` },
         responseType: "blob",
       });
@@ -240,7 +241,7 @@ export default function Inventory() {
                   <td className="px-4 py-2">
                     {p.image ? (
                       <img
-                        src={p.image ? `http://localhost:8080/uploads/${p.image}` : "https://placehold.co/35x35?text=No+Img"}
+                        src={p.image ? `${API_BASE}/uploads/${p.image}` : "https://placehold.co/35x35?text=No+Img"}
                         alt={p.name}
                         className="h-12 w-12 object-cover rounded"
                       />

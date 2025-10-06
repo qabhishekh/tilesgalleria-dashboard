@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Select from "react-select";
+import { API_BASE } from "../../config/api";
 
 const BOX_COVERAGE = 2.1;
 
@@ -77,7 +78,7 @@ export default function CreateInvoiceNew() {
   // categories get
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/categories", {
+      .get(`${API_BASE}/api/categories`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) =>
@@ -89,7 +90,7 @@ export default function CreateInvoiceNew() {
   // 🔹 Fetch quotations
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/quotations", {
+      .get(`${API_BASE}/api/quotations`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setQuotations(res.data))
@@ -99,7 +100,7 @@ export default function CreateInvoiceNew() {
   // 🔹 Fetch shipping addresses
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/shipping", {
+      .get(`${API_BASE}/api/shipping`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setShippingAddresses(res.data))
@@ -109,7 +110,7 @@ export default function CreateInvoiceNew() {
   // 🔹 Fetch products
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/products", {
+      .get(`${API_BASE}/api/products`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setProducts(res.data))
@@ -263,7 +264,7 @@ export default function CreateInvoiceNew() {
         notes,
       };
 
-      await axios.post("http://localhost:8080/api/invoices", payload, {
+      await axios.post(`${API_BASE}/api/invoices`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -514,7 +515,7 @@ export default function CreateInvoiceNew() {
                       src={
                         row.image.startsWith("http")
                           ? row.image
-                          : `http://localhost:8080/uploads/${row.image}`
+                          : `${API_BASE}/uploads/${row.image}`
                       }
                       alt="product"
                       className="w-12 h-12 mx-auto object-cover rounded"

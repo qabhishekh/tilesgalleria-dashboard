@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import image from "../../assets/logos/tiles-logo.png";
+import { API_BASE } from "../../config/api";
 
 export default function ViewQuotation() {
   const { id } = useParams();
@@ -13,14 +14,14 @@ export default function ViewQuotation() {
     async function fetchData() {
       try {
         // Try normal quotation
-        let res = await axios.get(`http://localhost:8080/api/quotations/${id}`, {
+        let res = await axios.get(`${API_BASE}/api/quotations/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setQuotation({ ...res.data, type: "auto" });
       } catch {
         try {
           // Fallback to manual
-          let res = await axios.get(`http://localhost:8080/api/manualquotations/${id}`, {
+          let res = await axios.get(`${API_BASE}/api/manualquotations/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setQuotation({ ...res.data, type: "manual" });
