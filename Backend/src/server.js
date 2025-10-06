@@ -5,6 +5,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
 import { connectDB } from "./config/db.js";
@@ -33,6 +34,19 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json({ limit: "2mb" }));
 app.use(morgan("dev"));
+
+// Database connection middleware for serverless
+app.use(async (req, res, next) => {
+  try {
+    if (mongoose.connection.readyState !== 1) {
+      await connectDB(process.env.MONGODB_URI);
+    }
+    next();
+  } catch (error) {
+    console.error('Database connection middleware error:', error);
+    return res.status(500).json({ error: 'Database connection failed' });
+  }
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -66,12 +80,20 @@ app.use("/api/password", passwordRoutes);
 app.use("/api/users", userRoutes);
 
 const PORT = process.env.PORT || 8080;
-connectDB(process.env.MONGODB_URI).then(()=>{
-  console.log(`🚀 ${process.env.APP_NAME||"API"} DB connected`);
-}).catch((e)=>{
-  console.error("DB connection failed", e);
-});
 
+// Database connection for development/local
+if (process.env.NODE_ENV !== 'production') {
+  connectDB(process.env.MONGODB_URI).then(()=>{
+    console.log(`🚀 ${process.env.APP_NAME||"API"} DB connected`);
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  }).catch((e)=>{
+    console.error("DB connection failed", e);
+  });
+}
+
+// Export for Vercel serverless functions
 export default app;
 
 
